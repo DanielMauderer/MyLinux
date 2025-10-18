@@ -83,12 +83,12 @@ print_success "Fish shell and fastfetch installed"
 
 # Install Zen Browser flatpak
 print_status "Installing/updating Zen Browser flatpak..."
-if flatpak list | grep -q "org.gnome.Browser"; then
+if flatpak list | grep -q "app.zen_browser.zen"; then
     print_status "Zen Browser already installed, updating..."
-    flatpak update -y org.gnome.Browser
+    flatpak update -y app.zen_browser.zen
 else
     print_status "Installing Zen Browser..."
-    flatpak install -y flathub org.gnome.Browser
+    flatpak install -y flathub app.zen_browser.zen
 fi
 
 # Set up configuration directories
