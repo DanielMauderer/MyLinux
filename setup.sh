@@ -156,20 +156,20 @@ print_status "Setting up toolbox container with command line tools..."
 if toolbox list | grep -q "dev-tools"; then
     print_status "Toolbox container 'dev-tools' already exists, updating..."
     toolbox run -c dev-tools bash -c "
-        dnf update -y
-        dnf install -y eza bat fd-find ripgrep fzf tree btop neofetch git curl wget vim nano
-        dnf install -y nodejs npm python3-pip rust cargo
-        dnf install -y gcc gcc-c++ make cmake
-        dnf install -y docker podman buildah skopeo
+        sudo dnf update -y
+        sudo dnf install -y eza bat fd-find ripgrep fzf tree btop neofetch git curl wget vim nano
+        sudo dnf install -y nodejs npm python3-pip rust cargo
+        sudo dnf install -y gcc gcc-c++ make cmake
+        sudo dnf install -y docker podman buildah skopeo
     "
 else
     print_status "Creating new toolbox container 'dev-tools'..."
     toolbox create --image fedora-toolbox:latest dev-tools
     toolbox run -c dev-tools bash -c "
-        dnf install -y eza bat fd-find ripgrep fzf tree btop neofetch git curl wget vim nano
-        dnf install -y nodejs npm python3-pip rust cargo
-        dnf install -y gcc gcc-c++ make cmake
-        dnf install -y docker podman buildah skopeo
+        sudo dnf install -y eza bat fd-find ripgrep fzf tree btop neofetch git curl wget vim nano
+        sudo dnf install -y nodejs npm python3-pip rust cargo
+        sudo dnf install -y gcc gcc-c++ make cmake
+        sudo dnf install -y docker podman buildah skopeo
     "
 fi
 print_success "Toolbox container with command line tools ready"
