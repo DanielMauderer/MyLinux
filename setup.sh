@@ -157,12 +157,12 @@ if toolbox list | grep -q "dev-tools"; then
     print_status "Toolbox container 'dev-tools' already exists, updating..."
     toolbox run -c dev-tools bash -c "
         set -e
-        dnf update -y
-        dnf install -y bat fd-find ripgrep fzf tree btop neofetch
-        dnf install -y nodejs npm python3-pip rust cargo
-        dnf install -y gcc gcc-c++ make cmake
-        dnf install -y docker podman buildah skopeo
-        dnf install -y git curl wget vim nano
+        sudo dnf update -y
+        sudo dnf install -y bat fd-find ripgrep fzf tree btop neofetch
+        sudo dnf install -y nodejs npm python3-pip rust cargo
+        sudo dnf install -y gcc gcc-c++ make cmake
+        sudo dnf install -y docker podman buildah skopeo
+        sudo dnf install -y git curl wget vim nano
         cargo install eza
     "
 else
@@ -170,12 +170,12 @@ else
     toolbox create --image fedora-toolbox:latest dev-tools
     toolbox run -c dev-tools bash -c "
         set -e
-        dnf update -y
-        dnf install -y bat fd-find ripgrep fzf tree btop neofetch
-        dnf install -y nodejs npm python3-pip rust cargo
-        dnf install -y gcc gcc-c++ make cmake
-        dnf install -y docker podman buildah skopeo
-        dnf install -y git curl wget vim nano
+        sudo dnf update -y
+        sudo dnf install -y bat fd-find ripgrep fzf tree btop neofetch
+        sudo dnf install -y nodejs npm python3-pip rust cargo
+        sudo dnf install -y gcc gcc-c++ make cmake
+        sudo dnf install -y docker podman buildah skopeo
+        sudo dnf install -y git curl wget vim nano
         cargo install eza
     "
 fi
