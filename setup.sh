@@ -77,7 +77,7 @@ fi
 
 # Install Fish shell and fastfetch in one layer to reduce layering
 print_status "Installing Fish shell and fastfetch via rpm-ostree (single layer)..."
-sudo rpm-ostree install fish fastfetch
+# sudo rpm-ostree install fish fastfetch
 print_success "Fish shell and fastfetch installed"
 
 
