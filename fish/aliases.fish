@@ -4,9 +4,9 @@
 # Basic commands
 alias c='clear'
 alias ff='fastfetch'
-alias ls='toolbox run -c dev-tools eza -a --icons=always'
-alias ll='toolbox run -c dev-tools eza -al --icons=always'
-alias lt='toolbox run -c dev-tools eza -a --tree --level=1 --icons=always'
+alias ls='toolbox run -c dev-tools fish -c eza -a --icons=always'
+alias ll='toolbox run -c dev-tools fish -c eza -al --icons=always'
+alias lt='toolbox run -c dev-tools fish -c eza -a --tree --level=1 --icons=always'
 alias shutdown='systemctl poweroff'
 alias wifi='nmtui'
 # Cleanup alias removed - script not available

@@ -49,51 +49,6 @@ if ! command -v rpm-ostree &> /dev/null; then
     exit 1
 fi
 
-# Check if Fish is already installed
-FISH_INSTALLED=false
-if command -v fish &> /dev/null; then
-    FISH_INSTALLED=true
-    print_warning "Fish shell is already installed"
-fi
-
-# Check if configuration exists
-CONFIG_EXISTS=false
-if [[ -d ~/.config/fish ]]; then
-    CONFIG_EXISTS=true
-    print_warning "Fish configuration already exists"
-fi
-
-print_header
-
-# Determine if this is an update or fresh install
-if [[ $FISH_INSTALLED == true && $CONFIG_EXISTS == true ]]; then
-    print_status "Detected existing Fish installation with configuration"
-    print_status "Running update mode..."
-    UPDATE_MODE=true
-else
-    print_status "Running fresh installation mode..."
-    UPDATE_MODE=false
-fi
-
-# Install Fish shell and fastfetch in one layer to reduce layering
-print_status "Installing Fish shell and fastfetch via rpm-ostree (single layer)..."
-# sudo rpm-ostree install fish fastfetch
-print_success "Fish shell and fastfetch installed"
-
-
-# Install Zen Browser flatpak
-print_status "Installing/updating Zen Browser flatpak..."
-if flatpak list | grep -q "app.zen_browser.zen"; then
-    print_status "Zen Browser already installed, updating..."
-    flatpak update -y app.zen_browser.zen
-else
-    print_status "Installing Zen Browser..."
-    flatpak install -y flathub app.zen_browser.zen
-fi
-
-# Set up configuration directories
-print_status "Setting up configuration directories..."
-
 # Function to create symlink with backup
 create_symlink() {
     local source="$1"
@@ -137,48 +92,20 @@ create_symlink "$REPO_DIR/fastfetch" "$HOME/.config/fastfetch" "Fastfetch"
 
 print_success "All configuration directories linked"
 
-# Set Fish as default shell if not already
-CURRENT_SHELL=$(getent passwd $USER | cut -d: -f7)
-if [[ $CURRENT_SHELL != "/usr/bin/fish" ]]; then
-    print_status "Setting Fish as default shell..."
-    # Add Fish to /etc/shells if not already there
-    if ! grep -q "/usr/bin/fish" /etc/shells; then
-        echo "/usr/bin/fish" | sudo tee -a /etc/shells
-    fi
-    sudo chsh -s /usr/bin/fish $USER
-    print_success "Fish set as default shell"
-else
-    print_status "Fish is already the default shell"
-fi
-
 # Set up toolbox container with command line tools
 print_status "Setting up toolbox container with command line tools..."
 if toolbox list | grep -q "dev-tools"; then
     print_status "Toolbox container 'dev-tools' already exists, updating..."
-    toolbox run -c dev-tools bash -c "
-        set -e
-        sudo dnf update -y
-        sudo dnf install -y bat fd-find ripgrep fzf tree btop neofetch
-        sudo dnf install -y nodejs npm python3-pip rust cargo
-        sudo dnf install -y gcc gcc-c++ make cmake
-        sudo dnf install -y docker podman buildah skopeo
-        sudo dnf install -y git curl wget vim nano
-        cargo install eza
-    "
 else
     print_status "Creating new toolbox container 'dev-tools'..."
     toolbox create --image fedora-toolbox:latest dev-tools
-    toolbox run -c dev-tools bash -c "
-        set -e
-        sudo dnf update -y
-        sudo dnf install -y bat fd-find ripgrep fzf tree btop neofetch
-        sudo dnf install -y nodejs npm python3-pip rust cargo
-        sudo dnf install -y gcc gcc-c++ make cmake
-        sudo dnf install -y docker podman buildah skopeo
-        sudo dnf install -y git curl wget vim nano
-        cargo install eza
-    "
 fi
+
+toolbox run -c dev-tools sudo dnf install -y cargo bat fd-find ripgrep fzf tree btop neofetch fish
+toolbox run -c dev-tools cargo install eza
+toolbox run -c dev-tools fish -c fish_add_path ~/.cargo/bin
+
+
 print_success "Toolbox container with command line tools ready"
 
 # Check for pending updates
@@ -192,11 +119,7 @@ echo ""
 print_success "Setup completed successfully!"
 echo ""
 echo "📋 Summary:"
-echo "  • Fish shell: $(if $FISH_INSTALLED; then echo "Updated"; else echo "Installed"; fi)"
-echo "  • Fastfetch: Installed in Silverblue"
 echo "  • Command line tools: Installed in toolbox container"
-echo "  • Zen Browser: Installed/Updated"
-echo "  • Configuration: $(if $UPDATE_MODE; then echo "Updated"; else echo "Installed"; fi)"
 echo "  • Fish config: Linked to ~/.config/fish/"
 echo "  • Hyprland config: Linked to ~/.config/hypr/"
 echo "  • Waybar config: Linked to ~/.config/waybar/"
@@ -211,12 +134,7 @@ echo "  • fp, fpi, fpu, fpr, fpl (flatpak commands)"
 echo "  • gs, ga, gc, gp, gl (git commands)"
 echo "  • top (btop), cat (bat), less (bat), more (bat), tree, fd, rg, fzf, neofetch (via toolbox)"
 echo ""
-if [[ $UPDATE_MODE == false ]]; then
-    print_warning "You need to reboot for the shell change to take effect."
-    echo "Alternatively, you can start using Fish immediately with: exec fish"
-else
-    print_status "Configuration updated. You can reload Fish with: exec fish"
-fi
+
 echo ""
 print_status "Run this script again anytime to update your configuration!"
 echo ""
