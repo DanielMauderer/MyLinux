@@ -1,0 +1,21 @@
+threshhold_green=0
+threshhold_yellow=25
+threshhold_red=100
+
+updates=$(dnf check-update -q | grep -c ^[a-z0-9])
+
+css_class="green"
+
+if [ "$updates" -gt $threshhold_yellow ]; then
+    css_class="yellow"
+fi
+
+if [ "$updates" -gt $threshhold_red ]; then
+    css_class="red"
+fi
+
+if [ "$updates" -gt $threshhold_green ]; then
+    printf '{"text": "%s", "alt": "%s", "tooltip": "Click to update your system", "class": "%s"}' "$updates" "$updates" "$css_class"
+else
+    printf '{"text": "0", "alt": "0", "tooltip": "No updates available", "class": "green"}'
+fi
