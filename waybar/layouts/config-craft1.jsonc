@@ -101,7 +101,7 @@
     "orientation": "horizontal",
     "modules": [
       "idle_inhibitor",
-      "custom/update",
+      // "custom/update",
     ],
   },
 }

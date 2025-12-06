@@ -97,7 +97,7 @@
     "orientation": "horizontal",
     "modules": [
       "idle_inhibitor",
-      "custom/update",
+      // "custom/update",
     ],
   },
   // Modules configuration
@@ -152,13 +152,13 @@
     "interval": 2,
     "format": " {temperatureC:>2}°C",
     "format-icons": ["0", "", ""],
-    "on-click": "kitty -e fish -c 'btop; exec fish'",
+    "on-click": "kitty --class dotfiles-floating -e fish -c 'top; exec fish'",
   },
 
   "cpu": {
     "interval": 2,
     "format": " {usage:>2}%",
-    "on-click": "kitty -e fish -c 'btop; exec fish'",
+    "on-click": "kitty --class dotfiles-floating -e fish -c 'top; exec fish'",
   },
 
   "memory": {
