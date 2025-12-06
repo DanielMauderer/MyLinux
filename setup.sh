@@ -92,6 +92,11 @@ create_symlink "$REPO_DIR/fastfetch" "$HOME/.config/fastfetch" "Fastfetch"
 
 print_success "All configuration directories linked"
 
+print_status "Installing Hyprshot..."
+git clone https://github.com/Gustash/hyprshot.git Hyprshot
+ln -s $(pwd)/Hyprshot/hyprshot $HOME/.local/bin
+chmod +x Hyprshot/hyprshot
+
 # Set up toolbox container with command line tools
 print_status "Setting up toolbox container with command line tools..."
 if toolbox list | grep -q "dev-tools"; then

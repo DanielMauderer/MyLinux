@@ -55,7 +55,6 @@
       "battery",
       "network",
       "custom/power",
-      "custom/wallpaper",
     ],
   },
   "group/group-5": {
