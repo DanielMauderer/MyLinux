@@ -90,6 +90,22 @@ create_symlink "$REPO_DIR/waybar" "$HOME/.config/waybar" "Waybar"
 print_status "Setting up Fastfetch configuration..."
 create_symlink "$REPO_DIR/fastfetch" "$HOME/.config/fastfetch" "Fastfetch"
 
+# Link SwayBackground configuration
+print_status "Setting up SwayBackground configuration..."
+create_symlink "$REPO_DIR/swaybg" "$HOME/.config/swaybg" "SwayBackground"
+
+# Link Dunst configuration
+print_status "Setting up Dunst configuration..."
+create_symlink "$REPO_DIR/dunst" "$HOME/.config/dunst" "Dunst"
+
+# Link kitty configuration
+print_status "Setting up Kitty configuration..."
+create_symlink "$REPO_DIR/kitty" "$HOME/.config/kitty" "Kitty"
+
+# Link wlogout configuration
+print_status "Setting up Wlogout configuration..."
+create_symlink "$REPO_DIR/wlogout" "$HOME/.config/wlogout" "Wlogout"
+
 print_success "All configuration directories linked"
 
 print_status "Installing Hyprshot..."
