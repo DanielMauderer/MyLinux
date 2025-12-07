@@ -77,6 +77,7 @@ create_symlink "$REPO_DIR/fish/config.fish" "$HOME/.config/fish/config.fish" "Fi
 create_symlink "$REPO_DIR/fish/aliases.fish" "$HOME/.config/fish/aliases.fish" "Fish aliases"
 create_symlink "$REPO_DIR/fish/functions.fish" "$HOME/.config/fish/functions.fish" "Fish functions"
 create_symlink "$REPO_DIR/fish/completions.fish" "$HOME/.config/fish/completions.fish" "Fish completions"
+create_symlink "$REPO_DIR/fish/fish_plugins" "$HOME/.config/fish/fish_plugins" "Fish plugins"
 
 # Link Hyprland configuration
 print_status "Setting up Hyprland configuration..."
@@ -128,6 +129,10 @@ toolbox run -c dev-tools sudo dnf install -y cargo bat fd-find ripgrep fzf tree 
 toolbox run -c dev-tools cargo install eza
 toolbox run -c dev-tools cargo install matugen
 toolbox run -c dev-tools fish -c "fish_add_path ~/.cargo/bin"
+
+# Install fisher and plugins (including Tide prompt)
+print_status "Installing fisher and Tide prompt..."
+toolbox run -c dev-tools fish -c 'if not type -q fisher; curl -sL https://git.io/fisher | source; and fisher install jorgebucaran/fisher; end; fisher update'
 
 # Ensure scripts are executable
 print_status "Ensuring Hypr scripts are executable..."
