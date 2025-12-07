@@ -128,7 +128,6 @@ fi
 toolbox run -c dev-tools sudo dnf install -y cargo bat fd-find ripgrep fzf tree btop fish
 toolbox run -c dev-tools cargo install eza
 toolbox run -c dev-tools cargo install matugen
-toolbox run -c dev-tools fish -c "fish_add_path ~/.cargo/bin"
 
 # Install fisher and plugins (including Tide prompt)
 print_status "Installing fisher and Tide prompt..."
@@ -179,3 +178,5 @@ echo "  • ~/.config/fastfetch/ → $REPO_DIR/fastfetch/"
 echo "  • ~/.config/wlogout/ → $REPO_DIR/wlogout/"
 echo ""
 print_status "Any changes you make to the repository will be reflected in your system!"
+
+echo "please run this command to add missing tools to your path: toolbox run -c dev-tools fish -c "fish_add_path ~/.cargo/bin""
