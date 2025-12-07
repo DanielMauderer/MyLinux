@@ -77,7 +77,7 @@ generate_waybar_css() {
     overlay2="$(extract_color surface_container_highest)"
     overlay1="$(extract_color surface_container_high)"
     overlay0="$(extract_color surface_container)"
-    rm -f "$WAYBAR_MATUGEN"
+    rm -rf "$WAYBAR_MATUGEN"
     mkdir -p "$(dirname "$WAYBAR_MATUGEN")"
     cat > "$WAYBAR_MATUGEN" <<EOF
 @define-color text ${text:-#e2e2e9};
@@ -109,7 +109,7 @@ generate_kitty_colors() {
     sec="$(extract_color secondary)"
     ter="$(extract_color tertiary)"
     err="$(extract_color error)"
-    rm -f "$KITTY_COLORS"
+    rm -rf "$KITTY_COLORS"
     mkdir -p "$(dirname "$KITTY_COLORS")"
     cat > "$KITTY_COLORS" <<EOF
 foreground ${fg:-#e2e2e9}
@@ -145,7 +145,7 @@ generate_dunst_colors() {
     sub1="$(extract_color on_surface_variant)"
     err="$(extract_color error)"
     pri="$(extract_color primary)"
-    rm -f "$DUNST_COLORS"
+    rm -rf "$DUNST_COLORS"
     mkdir -p "$(dirname "$DUNST_COLORS")"
     cat > "$DUNST_COLORS" <<EOF
 [urgency_low]
