@@ -127,6 +127,10 @@ toolbox run -c dev-tools sudo dnf install -y cargo bat fd-find ripgrep fzf tree 
 toolbox run -c dev-tools cargo install eza
 toolbox run -c dev-tools fish -c "fish_add_path ~/.cargo/bin"
 
+# Ensure scripts are executable
+print_status "Ensuring Hypr scripts are executable..."
+chmod +x "$HOME/.config/hypr/scripts/"*.sh 2>/dev/null || true
+
 
 print_success "Toolbox container with command line tools ready"
 
