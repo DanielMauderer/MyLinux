@@ -9,7 +9,7 @@
 # ----------------------------------------------------- 
 
 # See dunst(5) for all configuration options
-include "colors.conf"
+# include "colors.conf"
 
 [global]
     ### Display ###
