@@ -132,10 +132,7 @@ toolbox run -c dev-tools fish -c "fish_add_path ~/.cargo/bin"
 
 # Install fisher and plugins (including Tide prompt)
 print_status "Installing fisher and Tide prompt..."
-curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source 
-fisher install jorgebucaran/fisher
-fisher install IlanCosman/tide@v6
-fisher update;
+fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher && fisher install IlanCosman/tide@v6 && fisher update"
 
 # Ensure scripts are executable
 print_status "Ensuring Hypr scripts are executable..."
