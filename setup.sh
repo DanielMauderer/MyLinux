@@ -105,6 +105,7 @@ create_symlink "$REPO_DIR/kitty" "$HOME/.config/kitty" "Kitty"
 # Link wlogout configuration
 print_status "Setting up Wlogout configuration..."
 create_symlink "$REPO_DIR/wlogout" "$HOME/.config/wlogout" "Wlogout"
+create_symlink "$REPO_DIR/matugen" "$HOME/.config/matugen" "Matugen"
 
 print_success "All configuration directories linked"
 
@@ -125,6 +126,7 @@ fi
 
 toolbox run -c dev-tools sudo dnf install -y cargo bat fd-find ripgrep fzf tree btop fish
 toolbox run -c dev-tools cargo install eza
+toolbox run -c dev-tools cargo install matugen
 toolbox run -c dev-tools fish -c "fish_add_path ~/.cargo/bin"
 
 # Ensure scripts are executable

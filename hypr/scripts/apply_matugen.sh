@@ -52,10 +52,9 @@ ensure_hypr_colors() {
     fi
 
     if command -v matugen >/dev/null 2>&1 && [[ -f "$WALLPAPER" ]]; then
-        # Let Matugen use its configured targets (if any). We don't assume flags.
-        log "Running matugen on: $WALLPAPER"
+        log "Running matugen with templates on: $WALLPAPER"
         if ! matugen image "$WALLPAPER"; then
-            log "Matugen invocation failed; continuing with existing $HYPR_COLORS"
+            log "Matugen invocation failed; continuing with existing theme files"
         fi
     else
         log "matugen not available or wallpaper missing; using existing $HYPR_COLORS"
@@ -178,10 +177,6 @@ reload_apps() {
 
 main() {
     ensure_hypr_colors
-    generate_waybar_css
-    generate_wlogout_css
-    generate_kitty_colors
-    generate_dunst_colors
     reload_apps
     log "Applied Matugen-derived colors."
 }
