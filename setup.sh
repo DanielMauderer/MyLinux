@@ -109,6 +109,7 @@ create_symlink "$REPO_DIR/wlogout" "$HOME/.config/wlogout" "Wlogout"
 print_success "All configuration directories linked"
 
 print_status "Installing Hyprshot..."
+rm -rf $REPO_DIR/Hyprshot
 git clone https://github.com/Gustash/hyprshot.git $REPO_DIR/Hyprshot
 mv $REPO_DIR/Hyprshot/hyprshot $HOME/.local/bin/hyprshot
 chmod +x $HOME/.local/bin/hyprshot
