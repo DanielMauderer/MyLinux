@@ -60,9 +60,9 @@ end
 # Function to show git status with colors
 function gst
     git status --porcelain | while read -l line
-        set -l status (echo $line | cut -c1-2)
+        set -l statusg (echo $line | cut -c1-2)
         set -l file (echo $line | cut -c4-)
-        switch $status
+        switch $statusg
             case "??"
                 echo -e "\033[31m$file\033[0m (untracked)"
             case "A "

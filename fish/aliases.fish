@@ -11,6 +11,11 @@ alias shutdown='systemctl poweroff'
 alias wifi='nmtui'
 # Cleanup alias removed - script not available
 
+alias docker='podman'
+alias nf='npm run format'
+alias nl='npm run lint'
+alias nt='npm run test'
+
 # System management
 alias update='rpm-ostree upgrade'
 alias reboot='systemctl reboot'

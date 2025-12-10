@@ -72,12 +72,7 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Link Fish configuration
 print_status "Setting up Fish configuration..."
-mkdir -p ~/.config/fish
-create_symlink "$REPO_DIR/fish/config.fish" "$HOME/.config/fish/config.fish" "Fish config"
-create_symlink "$REPO_DIR/fish/aliases.fish" "$HOME/.config/fish/aliases.fish" "Fish aliases"
-create_symlink "$REPO_DIR/fish/functions.fish" "$HOME/.config/fish/functions.fish" "Fish functions"
-create_symlink "$REPO_DIR/fish/completions.fish" "$HOME/.config/fish/completions.fish" "Fish completions"
-create_symlink "$REPO_DIR/fish/fish_plugins" "$HOME/.config/fish/fish_plugins" "Fish plugins"
+create_symlink "$REPO_DIR/fish" "$HOME/.config/fish" "Fish"
 
 # Link Hyprland configuration
 print_status "Setting up Hyprland configuration..."

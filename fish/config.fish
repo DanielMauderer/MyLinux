@@ -14,3 +14,6 @@ set -g fish_greeting ""
 # Load additional configuration files
 source ~/.config/fish/aliases.fish
 source ~/.config/fish/functions.fish
+
+# nvm for fish
+load_nvm > /dev/stderr

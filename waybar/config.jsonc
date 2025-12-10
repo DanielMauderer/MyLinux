@@ -32,7 +32,6 @@
       "modules": [
           "cpu",
           "temperature",
-          "disk",
           "memory"
       ]
   },
@@ -129,7 +128,7 @@
       "show-passive-items": true
   },
   "clock": {
-      "format": "󰢚 {:%H:%M}",
+      "format": "{:%H:%M}",
       "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
       "format-alt": "{:%Y-%m-%d}"
   },
@@ -336,10 +335,10 @@
           "warning": 30,
           "critical": 15
       },
-      "format": "{icon}",
+      "format": "{icon} {capacity}%",
       "format-full": "{icon}",
       "format-plugged": " {capacity}% <span font='Font Awesome 5 Free'>\uf0e7</span> ",
-      "format-alt": "{icon} {capacity}%",
+      "format-alt": "{icon}",
       "tooltip-format": "{capacity}%, about {time} left",
       "format-icons": [
           "",
