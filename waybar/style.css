@@ -3,8 +3,8 @@
 
 * {
     min-height: 0;
-    font-family: "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 12px;
+    font-family: "JetBrainsMonoNL Nerd Font", "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
 }
 /* Waybar */
 #waybar {

@@ -6,11 +6,11 @@
 }
 
 window {
-   background-color: rgba(30, 30, 46, 0.20);
+   background-color: alpha(@base, 0.20);
 }
 
 button {
-  background-color: rgba(30, 30, 46, 0.90);
+  background-color: alpha(@base, 0.90);
   outline-style: none;
   margin-left: 0px;
   border: none;
@@ -18,13 +18,13 @@ button {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 10%;
-  border-radius: px;
+  border-radius: 0px;
   animation: gradient_f 20s ease-in infinite;
   text-shadow: none;
 }
 
 button:focus {
-  background-color: rgba(30, 30, 46, 0.90);
+  background-color: alpha(@base, 0.90);
   background-size: 10%;
   border: none;
 }
@@ -38,8 +38,6 @@ button:hover {
 }
 
 #shutdown {
-  margin-bottom: -2.5rem;
-  margin-right: -2rem;
   background-image: image(url("./icons/power.png"));
 }
 #shutdown:hover {
@@ -47,7 +45,6 @@ button:hover {
 }
 
 #reboot {
-  margin-top: 1.4rem;
   background-image: image(url("./icons/restart.png"));
 }
 #reboot:hover {
@@ -56,14 +53,12 @@ button:hover {
 
 #lock {
   background-image: image(url("./icons/lock.png"));
-  margin-left: 16rem;
 }
 #lock:hover {
   background-image: image(url("./icons/lock-hover.png"));
 }
 
 #suspend {
-  margin-left: 12rem;
   background-image: image(url("./icons/sleep.png"));
 }
 #suspend:hover {
@@ -72,7 +67,6 @@ button:hover {
 
 #hibernate {
   background-image: image(url("./icons/hibernate.png"));
-  margin: 8rem -106rem -8rem 106rem;
 }
 #hibernate:hover {
   background-image: image(url("./icons/hibernate-hover.png"));
@@ -80,7 +74,6 @@ button:hover {
 
 #logout {
   background-image: image(url("./icons/logout.png"));
-  margin: -8rem 106rem 8rem -106rem;
 }
 #logout:hover {
   background-image: image(url("./icons/logout-hover.png"));
