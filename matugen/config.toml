@@ -19,4 +19,8 @@ input_path = "~/.config/matugen/templates/dunst_colors.conf.tmpl"
 output_path = "~/.config/dunst/colors.conf"
 post_hook = "command -v dunstctl >/dev/null 2>&1 && dunstctl reload || true"
 
+[templates.swaylock]
+input_path = "~/.config/matugen/templates/swaylock_config.tmpl"
+output_path = "~/.config/swaylock/config"
+
 

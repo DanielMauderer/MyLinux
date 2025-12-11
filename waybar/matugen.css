@@ -1,14 +1,15 @@
-@define-color text #e2e2e9;
-@define-color subtext1 #c4c6d0;
-@define-color subtext0 #8e9099;
-@define-color overlay2 #33353a;
-@define-color overlay1 #282a2f;
-@define-color overlay0 #1e2025;
-@define-color base #111318;
-@define-color mantle #282a2f;
-@define-color crust #0c0e13;
-@define-color mauve #abc7ff;
+@define-color text #f1dfda;
+@define-color subtext1 #d8c2bc;
+@define-color subtext0 #a08c87;
+@define-color overlay2 #3d3230;
+@define-color overlay1 #322825;
+@define-color overlay0 #271d1b;
+@define-color base #1a110f;
+@define-color mantle #322825;
+@define-color crust #140c0a;
+@define-color mauve #ffb5a0;
 @define-color red #ffb4ab;
-@define-color sky #bec6dc;
-@define-color green #ddbce0;
+@define-color sky #e7bdb2;
+@define-color green #d9c58d;
+
 
