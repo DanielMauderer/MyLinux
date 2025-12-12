@@ -4,9 +4,9 @@
 # Basic commands
 alias c='clear'
 alias ff='fastfetch'
-alias ls='toolbox run -c dev-tools /var/home/$USER/.cargo/bin/eza -a --icons=always'
-alias ll='toolbox run -c dev-tools /var/home/$USER/.cargo/bin/eza -al --icons=always'
-alias lt='toolbox run -c dev-tools /var/home/$USER/.cargo/bin/eza -a --tree --level=1 --icons=always'
+alias ls='eza -a --icons=always'
+alias ll='eza -al --icons=always'
+alias lt='eza -a --tree --level=1 --icons=always'
 alias shutdown='systemctl poweroff'
 alias wifi='nmtui'
 # Cleanup alias removed - script not available
@@ -23,8 +23,8 @@ alias suspend='systemctl suspend'
 alias hibernate='systemctl hibernate'
 
 # Toolbox aliases
-alias tb='toolbox enter'
-alias tbr='toolbox run'
+alias tb='SHELL=/usr/bin/fish toolbox enter'
+alias tbr='SHELL=/usr/bin/fish toolbox run'
 
 # Flatpak aliases
 alias fp='flatpak'
@@ -36,7 +36,7 @@ alias fpl='flatpak list'
 # Git aliases
 alias gs='git status'
 alias ga='git add'
-alias gc='git commit'
+alias gc='git checkout'
 alias gp='git push'
 alias gl='git log --oneline'
 
@@ -61,4 +61,3 @@ alias tree='toolbox run -c dev-tools tree'
 alias fd='toolbox run -c dev-tools fd'
 alias rg='toolbox run -c dev-tools rg'
 alias fzf='toolbox run -c dev-tools fzf'
-alias neofetch='toolbox run -c dev-tools neofetch'

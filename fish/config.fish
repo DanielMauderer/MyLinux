@@ -18,5 +18,4 @@ source ~/.config/fish/functions.fish
 # nvm for fish
 load_nvm > /dev/stderr
 
-
 eval $(ssh-agent -c) > /dev/null
