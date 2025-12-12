@@ -49,6 +49,7 @@
           "bluetooth",
           "battery",
           "network",
+          "custom/monitor",
           "custom/power"
       ]
   },
@@ -281,6 +282,11 @@
       "exec": "~/.config/waybar/scripts/updates.sh",
       "interval": 1800,
       "on-click": "~/.config/waybar/scripts/installupdates.sh"
+  },
+  "custom/monitor": {
+      "format": "󰍹",
+      "on-click": "~/.config/hypr/scripts/monitor-hotplug.sh",
+      "tooltip-format": "Switch Monitor Configuration"
   },
   "custom/power": {
       "format": "{icon}",

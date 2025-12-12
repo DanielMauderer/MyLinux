@@ -1,0 +1,10 @@
+{
+  "custom/monitor": {
+    "format": "󰍹",
+    "on-click": "~/.config/hypr/scripts/monitor-hotplug.sh",
+    "tooltip": "Switch Monitor Configuration",
+    "tooltip-format": "Click to switch monitor configuration"
+  }
+}
+
+
