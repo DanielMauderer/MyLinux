@@ -120,7 +120,7 @@ else
     toolbox create --image fedora-toolbox:latest dev-tools
 fi
 
-toolbox run -c dev-tools sudo dnf install -y cargo bat fd-find ripgrep fzf tree btop fish
+toolbox run -c dev-tools sudo dnf install -y cargo fish
 toolbox run -c dev-tools cargo install eza
 toolbox run -c dev-tools cargo install matugen
 
