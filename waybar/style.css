@@ -172,3 +172,16 @@ label:focus {
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
+
+#custom-vpn {
+    padding: 0 10px;
+  }
+  
+  #custom-vpn.connected {
+    color: #a6e3a1;
+  }
+  
+  #custom-vpn.disconnected {
+    color: #f38ba8;
+  }
+  

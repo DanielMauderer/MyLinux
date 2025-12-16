@@ -49,7 +49,6 @@
           "bluetooth",
           "battery",
           "network",
-          "custom/monitor",
           "custom/power"
       ]
   },
@@ -91,7 +90,9 @@
   "group/group-10": {
       "orientation": "horizontal",
       "modules": [
-          "idle_inhibitor"
+          "idle_inhibitor",
+          "custom/vpn",
+          "custom/monitor"
       ]
   },
   "hyprland/workspaces": {
@@ -442,6 +443,12 @@
       "format": "󰙣",
       "on-click": "playerctl --player=spotify previous && playerctl --player=youtube-music previous",
       "tooltip": false
+  },
+  "custom/vpn": {
+    "exec": "~/.config/hypr/scripts/vpn_status.sh",
+    "interval": 5,
+    "on-click": "~/.config/hypr/scripts/vpn_toggle.sh",
+    "format": "{}"
   },
   "custom/music": {
       "exec": "playerctl -p $(playerctl -l | head -n 1) status",
