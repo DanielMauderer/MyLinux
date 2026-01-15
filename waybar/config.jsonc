@@ -451,14 +451,11 @@
     "format": "{}"
   },
   "custom/music": {
-      "exec": "playerctl -p $(playerctl -l | head -n 1) status",
-      "on-click": "playerctl -p $(playerctl -l | head -n 1) play-pause",
-      "on-scroll-up": "playerctl -p $(playerctl -l | head -n 1) next",
-      "on-scroll-down": "playerctl -p $(playerctl -l | head -n 1) previous",
-      "format": "{icon} {status}",
-      "tooltip": "Reproductor de Música",
-      "icon": "",
-      "max-length": 15
+    "exec": "player=$(playerctl -l 2>/dev/null | head -n 1); [ -n \"$player\" ] && playerctl -p \"$player\" status || echo \"\"",
+    "interval": 2,
+    "on-click": "player=$(playerctl -l | head -n 1); [ -n \"$player\" ] && playerctl -p \"$player\" play-pause",
+    "format": " {}",
+    "max-length": 15
   },
   "custom/catppuccin-theme": {
       "format": "󰏘",

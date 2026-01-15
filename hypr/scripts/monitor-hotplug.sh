@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # External monitor names
-HDMI=HDMI-A-1
-DP=DP-1
+HDMI=DP-5
+DP=DP-6
 
 # Check if both HDMI-A-1 and DP-1 are connected
 HDMI_CONNECTED=$(hyprctl monitors | grep -c "$HDMI" || true)
