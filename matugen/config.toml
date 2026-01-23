@@ -23,4 +23,6 @@ post_hook = "command -v dunstctl >/dev/null 2>&1 && dunstctl reload || true"
 input_path = "~/.config/matugen/templates/swaylock_config.tmpl"
 output_path = "~/.config/swaylock/config"
 
-
+[templates.rofi]
+input_path = "~/.config/matugen/templates/rofi_colors.rasi.tmpl"
+output_path = "~/.config/rofi/colors.rasi"

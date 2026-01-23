@@ -103,6 +103,10 @@ print_status "Setting up Wlogout configuration..."
 create_symlink "$REPO_DIR/wlogout" "$HOME/.config/wlogout" "Wlogout"
 create_symlink "$REPO_DIR/matugen" "$HOME/.config/matugen" "Matugen"
 
+# Link Rofi configuration
+print_status "Setting up Rofi configuration..."
+create_symlink "$REPO_DIR/rofi" "$HOME/.config/rofi" "Rofi"
+
 print_success "All configuration directories linked"
 
 print_status "Installing Hyprshot..."
@@ -171,6 +175,7 @@ echo "  • ~/.config/hypr/ → $REPO_DIR/hypr/"
 echo "  • ~/.config/waybar/ → $REPO_DIR/waybar/"
 echo "  • ~/.config/fastfetch/ → $REPO_DIR/fastfetch/"
 echo "  • ~/.config/wlogout/ → $REPO_DIR/wlogout/"
+echo "  • ~/.config/rofi/ → $REPO_DIR/rofi/"
 echo ""
 print_status "Any changes you make to the repository will be reflected in your system!"
 

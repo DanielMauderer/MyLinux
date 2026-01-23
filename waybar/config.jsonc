@@ -49,6 +49,7 @@
           "bluetooth",
           "battery",
           "network",
+          "custom/power-profile",
           "custom/power"
       ]
   },
@@ -194,7 +195,7 @@
   },
   "network": {
       "format": "{ifname}",
-      "format-wifi": " {essid} ({signalStrength}%)",
+      "format-wifi": "  {essid}",
       "format-ethernet": "  {ifname}",
       "format-disconnected": "Disconnected ⚠",
       "tooltip-format": " {ifname} via {gwaddri}",
@@ -288,6 +289,13 @@
       "format": "󰍹",
       "on-click": "~/.config/hypr/scripts/monitor-hotplug.sh",
       "tooltip-format": "Switch Monitor Configuration"
+  },
+  "custom/power-profile": {
+      "exec": "~/.config/waybar/scripts/tuned-adm.sh",
+      "interval": 5,
+      "on-click": "~/.config/waybar/scripts/tuned-adm.sh cycle",
+      "format": "{}",
+      "tooltip-format": "Power Profile (Click to cycle)"
   },
   "custom/power": {
       "format": "{icon}",
