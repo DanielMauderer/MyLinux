@@ -16,6 +16,8 @@ alias nf='npm run format'
 alias nl='npm run lint'
 alias nt='npm run test'
 
+alias nx='npx nx'
+
 # System management
 alias update='rpm-ostree upgrade'
 alias reboot='systemctl reboot'
