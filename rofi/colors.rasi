@@ -16,7 +16,7 @@
     urgent:                 #ffb4ab;
     
     /* Surface variants */
-    border:                 #534341;
+    border:                 #53433f;
     separator:              #3d3230;
     
     /* Transparency variants */

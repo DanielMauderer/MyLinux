@@ -107,6 +107,26 @@ create_symlink "$REPO_DIR/matugen" "$HOME/.config/matugen" "Matugen"
 print_status "Setting up Rofi configuration..."
 create_symlink "$REPO_DIR/rofi" "$HOME/.config/rofi" "Rofi"
 
+# Link GTK 3.0 configuration
+print_status "Setting up GTK 3.0 configuration..."
+create_symlink "$REPO_DIR/gtk-3.0" "$HOME/.config/gtk-3.0" "GTK 3.0"
+
+# Link GTK 4.0 configuration
+print_status "Setting up GTK 4.0 configuration..."
+create_symlink "$REPO_DIR/gtk-4.0" "$HOME/.config/gtk-4.0" "GTK 4.0"
+
+# Link Kvantum (Qt theming) configuration
+print_status "Setting up Kvantum configuration..."
+create_symlink "$REPO_DIR/Kvantum" "$HOME/.config/Kvantum" "Kvantum"
+
+# Link qt5ct configuration
+print_status "Setting up qt5ct configuration..."
+create_symlink "$REPO_DIR/qt5ct" "$HOME/.config/qt5ct" "qt5ct"
+
+# Link qt6ct configuration
+print_status "Setting up qt6ct configuration..."
+create_symlink "$REPO_DIR/qt6ct" "$HOME/.config/qt6ct" "qt6ct"
+
 print_success "All configuration directories linked"
 
 print_status "Installing Hyprshot..."
@@ -176,7 +196,16 @@ echo "  • ~/.config/waybar/ → $REPO_DIR/waybar/"
 echo "  • ~/.config/fastfetch/ → $REPO_DIR/fastfetch/"
 echo "  • ~/.config/wlogout/ → $REPO_DIR/wlogout/"
 echo "  • ~/.config/rofi/ → $REPO_DIR/rofi/"
+echo "  • ~/.config/gtk-3.0/ → $REPO_DIR/gtk-3.0/"
+echo "  • ~/.config/gtk-4.0/ → $REPO_DIR/gtk-4.0/"
+echo "  • ~/.config/Kvantum/ → $REPO_DIR/Kvantum/"
+echo "  • ~/.config/qt5ct/ → $REPO_DIR/qt5ct/"
+echo "  • ~/.config/qt6ct/ → $REPO_DIR/qt6ct/"
 echo ""
 print_status "Any changes you make to the repository will be reflected in your system!"
+echo ""
+print_status "For Qt theming to work, add these to your ~/.profile or hyprland.conf:"
+echo "  export QT_QPA_PLATFORMTHEME=qt5ct"
+echo "  export QT_STYLE_OVERRIDE=kvantum"
 
 echo "please run this command to add missing tools to your path: toolbox run -c dev-tools fish -c "fish_add_path ~/.cargo/bin""

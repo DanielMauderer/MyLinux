@@ -1,14 +1,179 @@
+#      _                 _    
+#   __| |_   _ _ __  ___| |_  
+#  / _` | | | | '_ \/ __| __| 
+# | (_| | |_| | | | \__ \ |_  
+#  \__,_|\__,_|_| |_|___/\__| 
+#                             
+#  Enhanced styling with matugen colors
+
+[global]
+    ### Display ###
+    monitor = 0
+    follow = mouse
+
+    ### Geometry ###
+    width = (280, 400)
+    height = (0, 300)
+    origin = top-right
+    offset = (16, 16)
+    scale = 0
+    notification_limit = 5
+
+    ### Progress bar ###
+    progress_bar = true
+    progress_bar_height = 8
+    progress_bar_frame_width = 0
+    progress_bar_min_width = 200
+    progress_bar_max_width = 380
+    progress_bar_corner_radius = 4
+
+    ### Appearance ###
+    transparency = 0
+    corner_radius = 16
+    frame_width = 2
+    gap_size = 8
+    separator_height = 0
+    padding = 16
+    horizontal_padding = 16
+    text_icon_padding = 16
+    
+    ### Colors (matugen generated) ###
+    frame_color = "{{ colors.primary.default.hex }}"
+    separator_color = frame
+    
+    ### Icons ###
+    enable_recursive_icon_lookup = true
+    icon_theme = "Papirus-Dark,Adwaita"
+    icon_position = left
+    min_icon_size = 48
+    max_icon_size = 64
+    icon_corner_radius = 12
+    icon_path = /usr/share/icons/Papirus-Dark/48x48/status/:/usr/share/icons/Papirus-Dark/48x48/devices/:/usr/share/icons/Papirus-Dark/48x48/apps/
+
+    ### Text ###
+    font = JetBrainsMono Nerd Font 10
+    line_height = 4
+    markup = full
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
+    show_age_threshold = 60
+    ellipsize = middle
+    ignore_newline = no
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = no
+
+    ### Behavior ###
+    sort = yes
+    indicate_hidden = yes
+    sticky_history = yes
+    history_length = 50
+    always_run_script = true
+    ignore_dbusclose = false
+
+    ### Mouse ###
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
+
+    ### Wayland ###
+    layer = overlay
+    force_xwayland = false
+
+    ### Legacy ###
+    force_xinerama = false
+
+    ### Browser/dmenu ###
+    dmenu = /usr/bin/rofi -dmenu -p "Dunst:"
+    browser = /usr/bin/xdg-open
+
+    title = Dunst
+    class = Dunst
+
+[experimental]
+    per_monitor_dpi = false
+
 [urgency_low]
-background = "{{ colors.surface.default.hex }}CC"
-foreground = "{{ colors.on_surface_variant.default.hex }}"
+    background = "{{ colors.surface_container.default.hex }}F2"
+    foreground = "{{ colors.on_surface_variant.default.hex }}"
+    frame_color = "{{ colors.outline_variant.default.hex }}"
+    timeout = 5
+    default_icon = dialog-information
+    highlight = "{{ colors.primary.default.hex }}"
 
 [urgency_normal]
-background = "{{ colors.surface.default.hex }}CC"
-foreground = "{{ colors.on_surface.default.hex }}"
+    background = "{{ colors.surface_container.default.hex }}F2"
+    foreground = "{{ colors.on_surface.default.hex }}"
+    frame_color = "{{ colors.primary.default.hex }}"
+    timeout = 8
+    default_icon = dialog-information
+    highlight = "{{ colors.primary.default.hex }}"
 
 [urgency_critical]
-background = "{{ colors.error.default.hex }}CC"
-foreground = "{{ colors.surface.default.hex }}"
-frame_color = "{{ colors.primary.default.hex }}"
+    background = "{{ colors.error_container.default.hex }}F2"
+    foreground = "{{ colors.on_error_container.default.hex }}"
+    frame_color = "{{ colors.error.default.hex }}"
+    timeout = 0
+    default_icon = dialog-warning
+    highlight = "{{ colors.error.default.hex }}"
 
+# App-specific rules for pretty notifications
 
+[spotify]
+    desktop_entry = "com.spotify.Client"
+    format = "<b>Now Playing</b>\n<i>%s</i>\n%b"
+    icon_position = top
+    alignment = center
+    max_icon_size = 96
+    timeout = 5
+
+[discord]
+    desktop_entry = "com.discordapp.Discord"
+    format = "<b>%s</b>\n%b"
+    timeout = 8
+
+[slack]
+    desktop_entry = "com.slack.Slack"
+    format = "<b>%s</b>\n%b"
+    timeout = 8
+
+[telegram]
+    desktop_entry = "org.telegram.desktop"
+    format = "<b>%s</b>\n%b"
+    timeout = 10
+
+[firefox]
+    appname = "Firefox"
+    format = "<b>%s</b>\n%b"
+    timeout = 6
+
+[volume]
+    appname = "Volume"
+    format = "<b>%s</b>"
+    timeout = 2
+    history_ignore = yes
+
+[brightness]
+    appname = "Brightness"
+    format = "<b>%s</b>"
+    timeout = 2
+    history_ignore = yes
+
+[screenshot]
+    appname = "Screenshot"
+    format = "<b>Screenshot</b>\n%b"
+    timeout = 3
+
+[update]
+    appname = "System Update"
+    format = "<b>%s</b>\n%b"
+    timeout = 10
+
+[bluetooth]
+    appname = "bluetooth"
+    format = "<b>󰂯 Bluetooth</b>\n%b"
+    timeout = 5[network]
+    appname = "NetworkManager"
+    format = "<b>󰖩 Network</b>\n%b"
+    timeout = 5# vim: ft=cfg

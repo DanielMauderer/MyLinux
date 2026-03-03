@@ -16,8 +16,8 @@ post_hook = "kitty @ set-colors -a ~/.config/kitty/colors.conf >/dev/null 2>&1 |
 
 [templates.dunst]
 input_path = "~/.config/matugen/templates/dunst_colors.conf.tmpl"
-output_path = "~/.config/dunst/colors.conf"
-post_hook = "command -v dunstctl >/dev/null 2>&1 && dunstctl reload || true"
+output_path = "~/.config/dunst/dunstrc"
+post_hook = "pkill dunst; dunst &"
 
 [templates.swaylock]
 input_path = "~/.config/matugen/templates/swaylock_config.tmpl"
