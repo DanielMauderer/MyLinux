@@ -36,7 +36,7 @@ alias fpr='flatpak remove'
 alias fpl='flatpak list'
 
 # Git aliases
-alias gs='git status'
+alias gs='git-spice'
 alias ga='git add'
 alias gc='git checkout'
 alias gp='git push'

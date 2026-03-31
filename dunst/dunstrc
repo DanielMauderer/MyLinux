@@ -168,14 +168,10 @@
 [update]
     appname = "System Update"
     format = "<b>%s</b>\n%b"
-    timeout = 10
-
-[bluetooth]
+    timeout = 10[bluetooth]
     appname = "bluetooth"
     format = "<b>󰂯 Bluetooth</b>\n%b"
-    timeout = 5
-
-[network]
+    timeout = 5[network]
     appname = "NetworkManager"
     format = "<b>󰖩 Network</b>\n%b"
     timeout = 5# vim: ft=cfg

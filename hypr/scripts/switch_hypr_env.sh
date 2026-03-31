@@ -2,13 +2,13 @@
 set -euo pipefail
 
 usage() {
-  echo "Usage: $0 {p_laptop|w_laptop}"
+  echo "Usage: $0 {p_laptop|w_laptop|w_laptop_1Monitor|w_laptop_2Monitors}"
   exit 1
 }
 
 env_name="${1:-}"
 case "$env_name" in
-  p_laptop|w_laptop) ;;
+  p_laptop|w_laptop|w_laptop_1Monitor|w_laptop_2Monitors) ;;
   *) usage ;;
 esac
 
