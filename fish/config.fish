@@ -19,4 +19,4 @@ source ~/.config/fish/functions.fish
 load_nvm > /dev/stderr
 
 eval $(ssh-agent -c) > /dev/null
-eval "$(gs shell completion fish)"
+# eval "$(gs shell completion fish)"

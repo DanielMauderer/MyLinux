@@ -95,6 +95,10 @@ print_status "Setting up Dunst configuration..."
 create_symlink "$REPO_DIR/dunst" "$HOME/.config/dunst" "Dunst"
 
 # Link kitty configuration
+print_status "Setting up Nvim configuration..."
+create_symlink "$REPO_DIR/nvim" "$HOME/.config/nvim" "Nvim"
+
+# Link kitty configuration
 print_status "Setting up Kitty configuration..."
 create_symlink "$REPO_DIR/kitty" "$HOME/.config/kitty" "Kitty"
 
@@ -102,6 +106,10 @@ create_symlink "$REPO_DIR/kitty" "$HOME/.config/kitty" "Kitty"
 print_status "Setting up Wlogout configuration..."
 create_symlink "$REPO_DIR/wlogout" "$HOME/.config/wlogout" "Wlogout"
 create_symlink "$REPO_DIR/matugen" "$HOME/.config/matugen" "Matugen"
+
+# Link Lazygit configuration
+print_status "Setting up Lazygit configuration..."
+create_symlink "$REPO_DIR/lazygit" "$HOME/.config/lazygit" "Lazygit"
 
 # Link Rofi configuration
 print_status "Setting up Rofi configuration..."

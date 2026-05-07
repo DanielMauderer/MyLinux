@@ -41,6 +41,7 @@ alias ga='git add'
 alias gc='git checkout'
 alias gp='git push'
 alias gl='git log --oneline'
+alias lg='toolbox run -c dev-tools lazygit'
 
 # Directory navigation
 alias ..='cd ..'
