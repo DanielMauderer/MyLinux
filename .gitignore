@@ -9,6 +9,9 @@ wlogout/matugen.css
 # Hypr wallpaper cache
 hypr/cache/
 
+# Hyprshot tool directory (installed separately, not a dotfile)
+Hyprshot/
+
 # Fisher-managed plugin files (fish/fish_plugins declares what to install)
 fish/completions/fisher.fish
 fish/completions/tide.fish
@@ -27,5 +30,8 @@ fish/functions/nx.fish
 fish/functions/tide.fish
 fish/functions/tide/
 
-# Fish temp/backup files
+# Fish runtime state (changes on every prompt render — Tide cache, shell version)
+fish/fish_variables
 fish/fish_variables.*
+fish/conf.d/fish_frozen_key_bindings.fish.bak
+fish/conf.d/*.bak
