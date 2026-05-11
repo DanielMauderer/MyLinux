@@ -66,6 +66,15 @@ return {
 			-- elsewhere in your config, without redefining it, via `opts_extend`
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
+				per_filetype = {
+					toml = { "lsp", "path", "snippets", "buffer", "crates" },
+				},
+				providers = {
+					crates = {
+						name = "crates",
+						module = "crates.src.blink",
+					},
+				},
 				-- optionally disable cmdline completions
 				-- cmdline = {},
 			},

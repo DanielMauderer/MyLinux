@@ -86,6 +86,116 @@ Notable behaviors:
 - Custom `LspManager` command opens an LSP picker (`nvim/lua/lsp-manager.lua`)
 - Leader key: `<Space>`
 
+### Plugins
+
+**Colorscheme & UI**
+| Plugin | Description |
+|--------|-------------|
+| `ember-theme/nvim` | Active colorscheme (ember) |
+| `nvim-lualine/lualine.nvim` | Statusline |
+| `folke/which-key.nvim` | Shows pending keybind hints on leader press |
+| `folke/snacks.nvim` | Multi-purpose: fuzzy pickers, notifications, statuscolumn, bigfile handling, quickfile, file rename |
+| `j-hui/fidget.nvim` | LSP progress spinner in bottom-right corner |
+
+**LSP & Completion**
+| Plugin | Description |
+|--------|-------------|
+| `neovim/nvim-lspconfig` | LSP configuration — servers: `lua_ls`, `gopls`, `clangd`, `html`, `cssls`, `jsonls`, `yamlls` (rust_analyzer managed by rustaceanvim) |
+| `williamboman/mason.nvim` | LSP/tool installer UI (`:Mason`) |
+| `williamboman/mason-lspconfig.nvim` | Bridges Mason with lspconfig |
+| `WhoIsSethDaniel/mason-tool-installer.nvim` | Auto-installs formatters/linters: stylua, prettierd, isort, ruff, gofumpt, clang-format |
+| `saghen/blink.cmp` | Completion engine (sources: LSP, path, snippets, buffer) |
+| `L3MON4D3/LuaSnip` | Snippet engine (dependency of blink.cmp) |
+| `Fildo7525/pretty_hover` | Prettier hover documentation popup |
+| `b0o/schemastore.nvim` | JSON/YAML schema store for jsonls/yamlls |
+| `folke/neodev.nvim` | Neovim Lua API completions for editing configs |
+| `rachartier/tiny-code-action.nvim` | LSP code actions with diff preview (`<leader>ca`) |
+
+**Rust**
+| Plugin | Description |
+|--------|-------------|
+| `mrcjkb/rustaceanvim` | Enhanced rust_analyzer integration — runnables (`<leader>cr`), debuggables (`<leader>cD`), expand macro (`<leader>cE`), explain error (`<leader>ce`) |
+| `saecki/crates.nvim` | Cargo.toml crate version management — show versions (`<leader>cv`), upgrade crate (`<leader>cu`), upgrade all (`<leader>cU`); completions via blink.cmp in toml files |
+
+**Treesitter**
+| Plugin | Description |
+|--------|-------------|
+| `nvim-treesitter/nvim-treesitter` | Syntax highlighting, indentation, and text objects (bash, c, rust, ts, js, lua, html, css, etc.) |
+| `stevearc/aerial.nvim` | Code outline/symbol tree picker (`<leader>fa`) |
+
+**Formatting**
+| Plugin | Description |
+|--------|-------------|
+| `stevearc/conform.nvim` | Formatter dispatcher — lua:stylua, python:isort+ruff, rust:rustfmt, js/ts:prettierd, json:jq, sql:sqruff/sqlfluff (`<leader>fo`, `<leader>fs` for SQL) |
+
+**Debugging (DAP)**
+| Plugin | Description |
+|--------|-------------|
+| `mfussenegger/nvim-dap` | Debug Adapter Protocol core — configs for C/C++/Rust (gdb) and TypeScript/JavaScript (js-debug-adapter) |
+| `rcarriga/nvim-dap-ui` | DAP UI (auto-opens on debug start; F5 continue, F10 step over, F11 step in, F12 step out, `<leader>du` toggle) |
+| `theHamsta/nvim-dap-virtual-text` | Shows variable values inline while debugging |
+| `jay-babu/mason-nvim-dap.nvim` | Auto-installs DAP adapters (cppdbg, js-debug-adapter) via Mason |
+| `Weissle/persistent-breakpoints.nvim` | Persists breakpoints across sessions (`<leader>db` toggle, `<leader>dB` conditional, `<leader>dc` clear) |
+
+**Git**
+| Plugin | Description |
+|--------|-------------|
+| `tpope/vim-fugitive` | Git commands inside Neovim (`:G`, `:Gdiff`, etc.) |
+| `tpope/vim-rhubarb` | GitHub integration for fugitive (`:GBrowse`) |
+| `lewis6991/gitsigns.nvim` | Git hunks in gutter; stage/reset/blame/diff hunks (`<leader>h*`, `]c`/`[c` to navigate) |
+| `NeogitOrg/neogit` | Magit-like interactive Git UI (`<leader>gg` open, `<leader>gp` pull --rebase) |
+| `harrisoncramer/gitlab.nvim` | GitLab MR review and comment integration |
+| `sindrets/diffview.nvim` | Diff viewer (dependency of neogit and gitlab.nvim) |
+
+**File Navigation**
+| Plugin | Description |
+|--------|-------------|
+| `nvim-neo-tree/neo-tree.nvim` | File tree sidebar (`<leader>tt` toggle, `<leader>tT` float, `<leader>tg` git status, `<leader>tb` buffers) |
+| `stevearc/oil.nvim` | Edit the filesystem like a buffer |
+| `dmtrKovalenko/fff.nvim` | Fast Rust-powered file picker (`<leader>ff` from cwd, `<leader>Ff` from git root) |
+| `ibhagwan/fzf-lua` | fzf-based pickers: registers (`<leader>sr`), zoxide jump (`<leader>z`), ripgrep in dir (`<leader>Rg`) |
+| `junegunn/fzf` + `fzf.vim` | Base fzf binary and Vim commands |
+
+**Search & Replace**
+| Plugin | Description |
+|--------|-------------|
+| `MagicDuck/grug-far.nvim` | Find-and-replace UI with regex support (`:GrugFar`) |
+
+**Diagnostics**
+| Plugin | Description |
+|--------|-------------|
+| `folke/trouble.nvim` | Diagnostics list panel (`<leader>xx` all, `<leader>xX` buffer errors, `<leader>cs` symbols, `<leader>cl` LSP refs) |
+
+**Editing Utilities**
+| Plugin | Description |
+|--------|-------------|
+| `numToStr/Comment.nvim` | `gc` to comment/uncomment visual regions or lines |
+| `windwp/nvim-autopairs` | Auto-closes brackets, quotes, and parens in insert mode |
+| `kylechui/nvim-surround` | Add/change/delete surrounding characters (brackets, quotes, HTML tags) |
+| `chrisgrieser/nvim-origami` | Enhanced code folding with folded-line count display |
+| `tpope/vim-sleuth` | Auto-detects `tabstop` and `shiftwidth` from file context |
+
+**HTTP & APIs**
+| Plugin | Description |
+|--------|-------------|
+| `mistweaverco/kulala.nvim` | HTTP client for `.http`/`.rest` files (`<leader>ks` send, `<leader>ka` send all, `<leader>kb` scratchpad) |
+
+**Project Management**
+| Plugin | Description |
+|--------|-------------|
+| `letieu/jira.nvim` | Jira issue browser inside Neovim (active sprint, backlog, JQL queries) |
+| `linux-cultist/venv-selector.nvim` | Python virtual environment selector (`,v`; only loads for Python files) |
+
+**Notes**
+| Plugin | Description |
+|--------|-------------|
+| `epwalsh/obsidian.nvim` | Obsidian vault integration for markdown (loads only if `~/Cloud/Obsidian` exists) |
+
+**Fun**
+| Plugin | Description |
+|--------|-------------|
+| `nvzone/typr` | Typing speed practice game (`:Typr`, `:TyprStats`) |
+
 ## Adding/Changing Configs
 
 - **New app config**: Add directory here, add a `create_symlink` call in `setup.sh`, re-run `./setup.sh`

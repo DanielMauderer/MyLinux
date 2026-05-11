@@ -135,18 +135,20 @@ return {
 						pick.name
 					)
 				)
-				local output = nil
-				if handle then
-					output = handle:read("*a")
+				if not handle then
+					vim.notify("Failed to start cargo build", vim.log.levels.ERROR)
+					return nil
 				end
-				local ok, exit_type, code = handle:close()
+				local output = handle:read("*a")
+				local ok, _, code = handle:close()
 				if not ok then
 					vim.notify(string.format("Cargo build failed (exit %d)", code), vim.log.levels.ERROR)
 					return nil
 				end
 
-				vim.notify(string.format("Binary compiled to:\n%s", output), vim.log.levels.INFO)
-				return output
+				local path = vim.trim(output)
+				vim.notify(string.format("Binary compiled to:\n%s", path), vim.log.levels.INFO)
+				return path
 			end
 
 			local ts_skip_files = { "<node_internals>/**", "**/node_modules/**" }

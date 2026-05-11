@@ -171,19 +171,6 @@ return {
 					},
 				},
 			},
-			rust_analyzer = {
-				settings = {
-					["rust-analyzer"] = {
-						checkOnSave = { command = "clippy" },
-						cargo = { allFeatures = true },
-						procMacro = { enable = true },
-						diagnostics = {
-							enable = true,
-							experimental = { enable = true },
-						},
-					},
-				},
-			},
 			gopls = {
 				settings = {
 					gopls = {

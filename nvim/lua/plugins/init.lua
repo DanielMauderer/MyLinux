@@ -10,22 +10,21 @@ return {
 	"folke/neodev.nvim",
 
 	{
-		-- Theme inspired by Atom
-		"navarasu/onedark.nvim",
+		"ember-theme/nvim",
+		name = "ember",
 		priority = 1000,
 		config = function()
-			vim.cmd.colorscheme("onedark")
+			vim.cmd.colorscheme("ember")
 		end,
 	},
 
 	{
 		-- Set lualine as statusline
 		"nvim-lualine/lualine.nvim",
-		-- See `:help lualine.txt`
 		opts = {
 			options = {
 				icons_enabled = true,
-				theme = "onedark",
+				theme = "auto",
 				component_separators = "|",
 				section_separators = "",
 			},
