@@ -4,6 +4,11 @@
 # Add local bin to PATH
 set -gx PATH $PATH ~/.local/bin
 
+# Editor
+set -gx EDITOR nvim
+set -gx VISUAL nvim
+set -gx GIT_EDITOR nvim
+
 # History settings
 set -g fish_history_size 10000
 set -g fish_history_session_id (random)
