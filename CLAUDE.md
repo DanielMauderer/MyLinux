@@ -114,8 +114,18 @@ Notable behaviors:
 **Rust**
 | Plugin | Description |
 |--------|-------------|
-| `mrcjkb/rustaceanvim` | Enhanced rust_analyzer integration — runnables (`<leader>cr`), debuggables (`<leader>cD`), expand macro (`<leader>cE`), explain error (`<leader>ce`) |
-| `saecki/crates.nvim` | Cargo.toml crate version management — show versions (`<leader>cv`), upgrade crate (`<leader>cu`), upgrade all (`<leader>cU`); completions via blink.cmp in toml files |
+| `mrcjkb/rustaceanvim` | Enhanced rust_analyzer integration — runnables (`<leader>rr`), debuggables (`<leader>rd`), expand macro (`<leader>rm`), explain error (`<leader>re`) |
+| `saecki/crates.nvim` | Cargo.toml crate version management — show versions (`<leader>rv`), upgrade crate (`<leader>ru`), upgrade all (`<leader>rU`); completions via blink.cmp in toml files |
+
+**Testing**
+| Plugin | Description |
+|--------|-------------|
+| `nvim-neotest/neotest` | In-editor test runner using **rustaceanvim's** neotest adapter (cargo-nextest backend; do NOT also add `neotest-rust`) — run nearest (`<leader>rtt`), file (`<leader>rtf`), last (`<leader>rtl`), toggle summary (`<leader>rts`), output (`<leader>rto`), debug nearest via gdb DAP (`<leader>rtd`) |
+
+**AI Assistance**
+| Plugin | Description |
+|--------|-------------|
+| `coder/claudecode.nvim` | Runs Claude Code in a snacks terminal split that connects back to Neovim over the official IDE WebSocket/MCP protocol (selection, buffer & diagnostics sharing, inline diffs) — toggle (`<leader>cc`), focus (`<leader>cf`), resume (`<leader>cr`), select model (`<leader>cm`), send selection (`<leader>cv`, visual), add buffer (`<leader>cb`), accept/deny diff (`<leader>cy`/`<leader>cn`) |
 
 **Treesitter**
 | Plugin | Description |
@@ -202,3 +212,5 @@ Notable behaviors:
 - **Theme a new app**: Add a template to `matugen/templates/` and register it in `matugen/config.toml`
 - **New Hyprland keybinding**: Edit `hypr/conf/keybindings/default.conf`; reload with `SUPER+CTRL+R`
 - **New Waybar module**: Add `.jsonc` in `waybar/modules/`, reference it in `waybar/config.jsonc`
+- **Background Rust feedback**: `bacon` (cargo check/clippy/test watcher) is installed into the `dev-tools` toolbox by `setup.sh`; open it in a split with `<leader>rb`, or run `bacon` / the `cw` alias in any terminal
+- **Claude Code config**: tracked in `claude/` and symlinked into `~/.claude` by `setup.sh` as individual files (`settings.json`, `statusline.sh`, `commands/`, `hooks/`) — never the whole dir, since `~/.claude` holds live state. The PostToolUse hook `claude/hooks/rustfmt-edited.sh` reformats any `.rs` file Claude edits; host-specific overrides go in the gitignored `~/.claude/settings.local.json`. Project slash commands: `/clippy`, `/nextest`

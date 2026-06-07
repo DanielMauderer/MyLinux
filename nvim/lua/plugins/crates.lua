@@ -6,27 +6,27 @@ return {
 		opts = {},
 		keys = {
 			{
-				"<leader>cv",
+				"<leader>rv",
 				function()
 					require("crates").show_versions_popup()
 				end,
-				desc = "[C]rate [v]ersions",
+				desc = "Crate [v]ersions",
 				ft = "toml",
 			},
 			{
-				"<leader>cu",
+				"<leader>ru",
 				function()
 					require("crates").upgrade_crate()
 				end,
-				desc = "[C]rate [u]pgrade",
+				desc = "Crate [u]pgrade",
 				ft = "toml",
 			},
 			{
-				"<leader>cU",
+				"<leader>rU",
 				function()
 					require("crates").upgrade_all_crates()
 				end,
-				desc = "[C]rate [U]pgrade all",
+				desc = "Crate [U]pgrade all",
 				ft = "toml",
 			},
 		},

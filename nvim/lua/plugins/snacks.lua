@@ -33,6 +33,7 @@ return {
 			{ "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
 			{ "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
 			{ "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
+			{ "<leader>rb", function() Snacks.terminal.toggle("bacon", { win = { position = "right", width = 0.35 } }) end, desc = "[B]acon (cargo watch)" },
 
 			-- find
 			{ "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },

@@ -135,6 +135,17 @@ create_symlink "$REPO_DIR/qt5ct" "$HOME/.config/qt5ct" "qt5ct"
 print_status "Setting up qt6ct configuration..."
 create_symlink "$REPO_DIR/qt6ct" "$HOME/.config/qt6ct" "qt6ct"
 
+# Link Claude Code configuration
+# NOTE: ~/.claude holds live state (history, credentials, sessions, projects),
+# so we link only the individual tracked files — never the whole directory.
+print_status "Setting up Claude Code configuration..."
+mkdir -p "$HOME/.claude"
+create_symlink "$REPO_DIR/claude/settings.json" "$HOME/.claude/settings.json" "Claude settings"
+create_symlink "$REPO_DIR/claude/statusline.sh" "$HOME/.claude/statusline.sh" "Claude statusline"
+create_symlink "$REPO_DIR/claude/commands" "$HOME/.claude/commands" "Claude commands"
+create_symlink "$REPO_DIR/claude/hooks" "$HOME/.claude/hooks" "Claude hooks"
+chmod +x "$REPO_DIR/claude/statusline.sh" "$REPO_DIR/claude/hooks/"*.sh 2>/dev/null || true
+
 print_success "All configuration directories linked"
 
 print_status "Installing Hyprshot..."
@@ -155,6 +166,9 @@ fi
 toolbox run -c dev-tools sudo dnf install -y cargo fish
 toolbox run -c dev-tools cargo install eza
 toolbox run -c dev-tools cargo install matugen
+# Rust dev loop: in-editor test runner backend + background compile watcher
+toolbox run -c dev-tools cargo install --locked cargo-nextest
+toolbox run -c dev-tools cargo install --locked bacon
 
 # Install fisher and plugins (including Tide prompt)
 print_status "Installing fisher and Tide prompt..."
