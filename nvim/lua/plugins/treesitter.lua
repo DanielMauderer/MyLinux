@@ -1,101 +1,110 @@
 return {
-	{ -- Highlight, edit, and navigate code
+	-- Treesitter — `main` branch (the 0.12-era rewrite). There is no module/opts
+	-- system anymore: parsers are installed explicitly here, and highlight + indent
+	-- are enabled per-buffer by the FileType autocmd in `init.lua`
+	-- (`vim.treesitter.start` + `indentexpr`), which also auto-installs missing parsers.
+	{
 		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
+		branch = "main",
 		lazy = false,
-		main = "nvim-treesitter.config", -- Sets main module to use for opts
-		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-		opts = {
-			ensure_installed = {
+		build = ":TSUpdate",
+		config = function()
+			-- `:TSUpdate` only updates already-installed parsers; install() is what
+			-- populates them. Safe to call every startup — installed langs are skipped.
+			require("nvim-treesitter").install({
+				"angular",
 				"bash",
 				"c",
+				"cpp",
+				"css",
 				"diff",
+				"dockerfile",
+				"go",
+				"gomod",
+				"gosum",
 				"html",
 				"javascript",
+				"json",
 				"lua",
 				"luadoc",
 				"markdown",
 				"markdown_inline",
+				"python",
 				"query",
+				"regex",
 				"rust",
+				"scss",
+				"toml",
+				"tsx",
 				"typescript",
 				"vim",
 				"vimdoc",
-				"regex",
-				-- Angular
-				"angular",
-				"css",
-				"scss",
-			},
-			-- Autoinstall languages that are not installed
-			auto_install = true,
-			highlight = {
-				enable = true,
-				-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-				--  If you are experiencing weird indenting issues, add the language to
-				--  the list of additional_vim_regex_highlighting and disabled languages for indent.
-				additional_vim_regex_highlighting = { "ruby" },
-			},
-			indent = { enable = true, disable = { "ruby" } },
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "<c-space>",
-					node_incremental = "<c-space>",
-					scope_incremental = "<c-s>",
-					node_decremental = "<M-space>",
-				},
-			},
-			textobjects = {
-				select = {
-					enable = true,
-					lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-					keymaps = {
-						-- You can use the capture groups defined in textobjects.scm
-						["aa"] = "@parameter.outer",
-						["ia"] = "@parameter.inner",
-						["af"] = "@function.outer",
-						["if"] = "@function.inner",
-						["ac"] = "@class.outer",
-						["ic"] = "@class.inner",
-					},
-				},
-				move = {
-					enable = true,
-					set_jumps = true, -- whether to set jumps in the jumplist
-					goto_next_start = {
-						["]m"] = "@function.outer",
-						["]]"] = "@class.outer",
-					},
-					goto_next_end = {
-						["]M"] = "@function.outer",
-						["]["] = "@class.outer",
-					},
-					goto_previous_start = {
-						["[m"] = "@function.outer",
-						["[["] = "@class.outer",
-					},
-					goto_previous_end = {
-						["[M"] = "@function.outer",
-						["[]"] = "@class.outer",
-					},
-				},
-				swap = {
-					enable = true,
-					swap_next = {
-						["<leader>a"] = "@parameter.inner",
-					},
-					swap_previous = {
-						["<leader>A"] = "@parameter.inner",
-					},
-				},
-			},
-		},
-		-- There are additional nvim-treesitter modules that you can use to interact
-		-- with nvim-treesitter. You should go explore a few and see what interests you:
-		--
-		--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-		--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+				"yaml",
+			})
+
+			-- Incremental selection — the `main` branch dropped the built-in module,
+			-- so this is a small local replacement (see lua/ts-incremental.lua).
+			local inc = require("ts-incremental")
+			vim.keymap.set("n", "<C-space>", inc.init, { desc = "TS: start incremental selection" })
+			vim.keymap.set("x", "<C-space>", inc.grow, { desc = "TS: grow node" })
+			vim.keymap.set("x", "<C-s>", inc.grow, { desc = "TS: grow scope" })
+			vim.keymap.set("x", "<M-space>", inc.shrink, { desc = "TS: shrink node" })
+		end,
+	},
+
+	-- Treesitter text objects — also on its own `main` branch, with a new
+	-- manual-keymap API (the `.select` / `.move` / `.swap` submodules).
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		branch = "main",
+		lazy = false,
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			require("nvim-treesitter-textobjects").setup({
+				select = { lookahead = true },
+				move = { set_jumps = true },
+			})
+
+			-- Select (visual / operator-pending)
+			local select = require("nvim-treesitter-textobjects.select")
+			local selections = {
+				["aa"] = "@parameter.outer",
+				["ia"] = "@parameter.inner",
+				["af"] = "@function.outer",
+				["if"] = "@function.inner",
+				["ac"] = "@class.outer",
+				["ic"] = "@class.inner",
+			}
+			for key, query in pairs(selections) do
+				vim.keymap.set({ "x", "o" }, key, function()
+					select.select_textobject(query, "textobjects")
+				end, { desc = "TS select " .. query })
+			end
+
+			-- Movement
+			local move = require("nvim-treesitter-textobjects.move")
+			local moves = {
+				goto_next_start = { ["]m"] = "@function.outer", ["]]"] = "@class.outer" },
+				goto_next_end = { ["]M"] = "@function.outer", ["]["] = "@class.outer" },
+				goto_previous_start = { ["[m"] = "@function.outer", ["[["] = "@class.outer" },
+				goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" },
+			}
+			for fn, maps in pairs(moves) do
+				for key, query in pairs(maps) do
+					vim.keymap.set({ "n", "x", "o" }, key, function()
+						move[fn](query, "textobjects")
+					end, { desc = "TS " .. fn .. " " .. query })
+				end
+			end
+
+			-- Swap parameters
+			local swap = require("nvim-treesitter-textobjects.swap")
+			vim.keymap.set("n", "<leader>a", function()
+				swap.swap_next("@parameter.inner")
+			end, { desc = "Swap next parameter" })
+			vim.keymap.set("n", "<leader>A", function()
+				swap.swap_previous("@parameter.inner")
+			end, { desc = "Swap previous parameter" })
+		end,
 	},
 }

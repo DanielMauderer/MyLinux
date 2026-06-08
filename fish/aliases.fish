@@ -18,6 +18,15 @@ alias nt='npm run test'
 
 alias nx='npx nx'
 
+# Rust / cargo aliases (private projects)
+alias cb='cargo build'
+alias cbr='cargo build --release'
+alias cch='cargo check'        # not 'cc' — avoid shadowing the C compiler
+alias ck='cargo clippy --all-targets'
+alias ct='cargo nextest run'
+alias cr='cargo run'
+alias cw='bacon'               # background cargo check/clippy/test watcher
+
 # System management
 alias update='rpm-ostree upgrade'
 alias reboot='systemctl reboot'

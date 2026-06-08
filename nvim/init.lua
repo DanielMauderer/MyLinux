@@ -19,7 +19,7 @@ vim.o.expandtab = true
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
 		"clone",
@@ -91,8 +91,12 @@ vim.o.termguicolors = true
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
+vim.keymap.set("n", "[d", function()
+	vim.diagnostic.jump({ count = -1 })
+end, { desc = "Go to previous diagnostic message" })
+vim.keymap.set("n", "]d", function()
+	vim.diagnostic.jump({ count = 1 })
+end, { desc = "Go to next diagnostic message" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
@@ -101,11 +105,11 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 -- vim.keymap.set("n", "<leader>tt", "<cmd>NvimTreeToggle<CR>", { desc = "Nvim [t]oggle [T]ree" })
 
 -- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
+-- See `:help vim.hl.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
-		vim.highlight.on_yank()
+		vim.hl.on_yank()
 	end,
 	group = highlight_group,
 	pattern = "*",
@@ -132,10 +136,39 @@ local function has_chart_yaml()
 	return false
 end
 
+-- Enable treesitter highlighting + indent per buffer (nvim-treesitter `main` has
+-- no module system). If a parser isn't installed yet, install it async then
+-- start — the replacement for the old `auto_install = true`. Only languages
+-- treesitter actually ships are installed, so pseudo-filetypes (snacks_notif, …)
+-- are silently ignored instead of spamming "unsupported language" warnings.
+local ts_available -- memoized list of installable parsers
 vim.api.nvim_create_autocmd("FileType", {
 	callback = function(args)
-		if pcall(vim.treesitter.start, args.buf) then
-			vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+		if not lang then
+			return
+		end
+
+		local nts = require("nvim-treesitter")
+
+		local function start()
+			if vim.api.nvim_buf_is_valid(args.buf) and pcall(vim.treesitter.start, args.buf, lang) then
+				vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end
+		end
+
+		if vim.tbl_contains(nts.get_installed("parsers"), lang) then
+			start()
+			return
+		end
+
+		ts_available = ts_available or nts.get_available()
+		if vim.tbl_contains(ts_available, lang) then
+			nts.install({ lang }):await(vim.schedule_wrap(function(err)
+				if not err then
+					start()
+				end
+			end))
 		end
 	end,
 })
@@ -167,23 +200,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 
 vim.api.nvim_create_autocmd("VimLeave", {
   group = kitty_group,
-  callback = function() set_kitty_padding(YOUR_PADDING_VALUE) end,
-})
-
-local kitty_group = vim.api.nvim_create_augroup("KittyPadding", { clear = true })
-
-vim.api.nvim_create_autocmd("VimEnter", {
-  group = kitty_group,
-  callback = function()
-    vim.fn.system("kitten @ set-spacing padding=0")
-  end,
-})
-
-vim.api.nvim_create_autocmd("VimLeave", {
-  group = kitty_group,
-  callback = function()
-    vim.fn.system("kitten @ set-spacing padding=10")
-  end,
+  callback = function() set_kitty_padding(10) end,
 })
 
 -- Load LSP Manager

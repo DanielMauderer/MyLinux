@@ -22,7 +22,7 @@ end
 
 local function get_server_status(server_name)
 	-- Check cache first
-	local now = vim.loop.now()
+	local now = vim.uv.now()
 	if server_cache[server_name] and (now - server_cache[server_name].timestamp) < cache_timeout then
 		return server_cache[server_name].status, server_cache[server_name].icon, server_cache[server_name].description
 	end
@@ -73,11 +73,14 @@ local function get_server_status(server_name)
 end
 
 local function start_server(server_name)
-	local lspconfig = require("lspconfig")
-	local config = lspconfig[server_name]
+	-- Use the native config registered via vim.lsp.config() (see
+	-- plugins/nvim-lspconfig.lua), falling back to the lsp/<name>.lua that
+	-- nvim-lspconfig ships. (The old require("lspconfig")[name].setup{} path is
+	-- deprecated and bypasses our registered per-server settings.)
+	local config = vim.lsp.config[server_name]
 
 	if not config then
-		vim.notify("Server " .. server_name .. " not found in lspconfig", vim.log.levels.ERROR)
+		vim.notify("Server " .. server_name .. " has no vim.lsp.config entry", vim.log.levels.ERROR)
 		return false
 	end
 
@@ -88,10 +91,9 @@ local function start_server(server_name)
 		return true
 	end
 
-	-- Start the server
-	local success, _ = pcall(function()
-		config.setup({})
-	end)
+	-- Enable it natively — respects the settings/capabilities from vim.lsp.config()
+	-- and attaches to matching open buffers.
+	local success = pcall(vim.lsp.enable, server_name)
 
 	if success then
 		vim.notify("Started LSP server: " .. server_name, vim.log.levels.INFO)
@@ -105,6 +107,9 @@ local function start_server(server_name)
 end
 
 local function stop_server(server_name)
+	-- Prevent automatic re-attach on the next matching buffer.
+	pcall(vim.lsp.enable, server_name, false)
+
 	local clients = get_lsp_clients()
 	local client = clients[server_name]
 
@@ -113,8 +118,8 @@ local function stop_server(server_name)
 		return false
 	end
 
-	-- Stop the client
-	client.stop()
+	-- Stop the running client
+	client:stop()
 	vim.notify("Stopped LSP server: " .. server_name, vim.log.levels.INFO)
 	-- Clear cache for this server since status changed
 	server_cache[server_name] = nil
@@ -281,33 +286,21 @@ end
 
 -- Function to restart all LSP servers
 function M.restart_all_servers()
-	local clients = get_lsp_clients()
-	local count = 0
+	-- Snapshot the running servers, stop them, then re-enable the same set.
+	local running = vim.tbl_keys(get_lsp_clients())
 
-	for server_name, _ in pairs(clients) do
-		if stop_server(server_name) then
-			count = count + 1
-		end
+	for _, server_name in ipairs(running) do
+		stop_server(server_name)
 	end
 
-	vim.notify(string.format("Restarted %d LSP servers", count), vim.log.levels.INFO)
-
-	-- Start servers for current buffer filetype
-	local bufnr = vim.api.nvim_get_current_buf()
-	local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-
-	if filetype and filetype ~= "" then
-		local mason_lspconfig = require("mason-lspconfig")
-		local servers = mason_lspconfig.get_installed_servers()
-
-		for _, server_name in ipairs(servers) do
-			local config = require("lspconfig")[server_name]
-			if config and config.filetypes and vim.tbl_contains(config.filetypes, filetype) then
-				start_server(server_name)
-				break
-			end
+	-- Defer so clients finish shutting down before we re-enable them;
+	-- vim.lsp.enable re-attaches to matching open buffers.
+	vim.schedule(function()
+		for _, server_name in ipairs(running) do
+			start_server(server_name)
 		end
-	end
+		vim.notify(string.format("Restarted %d LSP servers", #running), vim.log.levels.INFO)
+	end)
 end
 
 -- Function to show LSP status in statusline

@@ -1,7 +1,10 @@
 return {
 	-- Main LSP Configuration
 	"neovim/nvim-lspconfig",
-	lazy = true, -- Lazy load for faster startup
+	-- Load on file open so the LSP setup below runs for every filetype.
+	-- (Previously this only loaded as a dependency of venv-selector on python files,
+	-- so LSP never attached for ts/lua/go/etc. in a fresh session.)
+	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		-- Automatically install LSPs and related tools to stdpath for Neovim
 		-- Mason must be loaded before its dependents so we need to set it up here.
@@ -34,7 +37,7 @@ return {
 				-- for LSP related items. It sets the mode, buffer and description for us each time.
 				local map = function(keys, func, desc, mode)
 					mode = mode or "n"
-					vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+					vim.keymap.set(mode, keys, func, { buf = event.buf, desc = "LSP: " .. desc })
 				end
 
 				-- Rename the variable under your cursor.
@@ -70,13 +73,13 @@ return {
 				then
 					local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-						buffer = event.buf,
+						buf = event.buf,
 						group = highlight_augroup,
 						callback = vim.lsp.buf.document_highlight,
 					})
 
 					vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-						buffer = event.buf,
+						buf = event.buf,
 						group = highlight_augroup,
 						callback = vim.lsp.buf.clear_references,
 					})
@@ -85,7 +88,7 @@ return {
 						group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
 						callback = function(event2)
 							vim.lsp.buf.clear_references()
-							vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
+							vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buf = event2.buf })
 						end,
 					})
 				end
