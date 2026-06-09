@@ -144,6 +144,7 @@ create_symlink "$REPO_DIR/claude/settings.json" "$HOME/.claude/settings.json" "C
 create_symlink "$REPO_DIR/claude/statusline.sh" "$HOME/.claude/statusline.sh" "Claude statusline"
 create_symlink "$REPO_DIR/claude/commands" "$HOME/.claude/commands" "Claude commands"
 create_symlink "$REPO_DIR/claude/hooks" "$HOME/.claude/hooks" "Claude hooks"
+create_symlink "$REPO_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md" "Claude user instructions"
 chmod +x "$REPO_DIR/claude/statusline.sh" "$REPO_DIR/claude/hooks/"*.sh 2>/dev/null || true
 
 print_success "All configuration directories linked"
