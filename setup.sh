@@ -150,6 +150,7 @@ chmod +x "$REPO_DIR/claude/statusline.sh" "$REPO_DIR/claude/hooks/"*.sh 2>/dev/n
 print_success "All configuration directories linked"
 
 print_status "Installing Hyprshot..."
+mkdir -p "$HOME/.local/bin"
 rm -rf $REPO_DIR/Hyprshot
 git clone https://github.com/Gustash/hyprshot.git $REPO_DIR/Hyprshot
 mv $REPO_DIR/Hyprshot/hyprshot $HOME/.local/bin/hyprshot
