@@ -210,6 +210,22 @@ return {
 					},
 				},
 			},
+			-- TypeScript / JavaScript. The stable typescript-language-server.
+			-- (Deliberately NOT `tsgo` — the experimental TS-Go preview panics on
+			-- completion; it's excluded from automatic_enable below.)
+			ts_ls = {},
+			-- Angular. The shipped config falls back to single-file mode when no
+			-- `angular.json`/`nx.json` is found, which makes ngserver attach to EVERY
+			-- `.ts` buffer and OOM (node heap limit) on large non-Angular repos. Restrict
+			-- it to real Angular/Nx workspaces so it only runs where it belongs.
+			angularls = {
+				root_dir = function(bufnr, on_dir)
+					local root = vim.fs.root(bufnr, { "angular.json", "nx.json" })
+					if root then
+						on_dir(root)
+					end
+				end,
+			},
 		}
 
 		-- Ensure the servers and tools above are installed

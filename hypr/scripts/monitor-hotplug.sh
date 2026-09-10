@@ -15,15 +15,15 @@ DUAL_MONITOR="w_laptop_2Monitors"
 
 switch_to() {
     local target="$1"
-    printf 'source = ~/.config/hypr/conf/monitors/%s.conf\n' "$target" > "${CONF_DIR}/monitor.conf"
-    printf 'source = ~/.config/hypr/conf/workspaces/%s.conf\n' "$target" > "${CONF_DIR}/workspace.conf"
+    printf 'require("conf.monitors.%s")\n' "$target" > "${CONF_DIR}/monitor.lua"
+    printf 'require("conf.workspaces.%s")\n' "$target" > "${CONF_DIR}/workspace.lua"
 }
 
 # Check which config is currently active and cycle to the next
-if grep -q "$DUAL_MONITOR" "${CONF_DIR}/monitor.conf" 2>/dev/null; then
+if grep -q "$DUAL_MONITOR" "${CONF_DIR}/monitor.lua" 2>/dev/null; then
     # Currently on dual monitors → switch to laptop only
     switch_to "$LAPTOP_ONLY"
-elif grep -q "$SINGLE_MONITOR" "${CONF_DIR}/monitor.conf" 2>/dev/null; then
+elif grep -q "$SINGLE_MONITOR" "${CONF_DIR}/monitor.lua" 2>/dev/null; then
     # Currently on single external monitor (home) → switch to dual monitors (work)
     switch_to "$DUAL_MONITOR"
 else

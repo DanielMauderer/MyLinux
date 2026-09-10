@@ -14,26 +14,23 @@ echo "Your customized variation will not be overwritten or deleted."
 if gum confirm "Do you want to restore all variations to the default values?"; then
     echo
 
-    echo "source = ~/.config/hypr/conf/keybindings/default.conf" >~/.config/hypr/conf/keybinding.conf
-    echo "Hyprland keybinding.conf restored!"
+    echo 'require("conf.keybindings.default")' >~/.config/hypr/conf/keybinding.lua
+    echo "Hyprland keybinding.lua restored!"
 
-    echo "source = ~/.config/hypr/conf/environments/default.conf" >~/.config/hypr/conf/environment.conf
-    echo "Hyprland environment.conf restored!"
+    echo 'require("conf.windowrules.default")' >~/.config/hypr/conf/windowrule.lua
+    echo "Hyprland windowrule.lua restored!"
 
-    echo "source = ~/.config/hypr/conf/windowrules/default.conf" >~/.config/hypr/conf/windowrule.conf
-    echo "Hyprland windowrule.conf restored!"
+    echo 'require("conf.animations.default")' >~/.config/hypr/conf/animation.lua
+    echo "Hyprland animation.lua restored!"
 
-    echo "source = ~/.config/hypr/conf/animations/default.conf" >~/.config/hypr/conf/animation.conf
-    echo "Hyprland animation.conf restored!"
+    echo 'require("conf.decorations.default")' >~/.config/hypr/conf/decoration.lua
+    echo "Hyprland decoration.lua restored!"
 
-    echo "source = ~/.config/hypr/conf/decorations/default.conf" >~/.config/hypr/conf/decoration.conf
-    echo "Hyprland decoration.conf restored!"
+    echo 'require("conf.monitors.default")' >~/.config/hypr/conf/monitor.lua
+    echo "Hyprland monitor.lua restored!"
 
-    echo "source = ~/.config/hypr/conf/windows/default.conf" >~/.config/hypr/conf/window.conf
-    echo "Hyprland window.conf restored!"
-
-    echo "source = ~/.config/hypr/conf/monitors/default.conf" >~/.config/hypr/conf/monitor.conf
-    echo "Hyprland monitor.conf restored!"
+    echo 'require("conf.workspaces.default")' >~/.config/hypr/conf/workspace.lua
+    echo "Hyprland workspace.lua restored!"
 
     echo
     echo ":: Restore done!"

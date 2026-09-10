@@ -1,5 +1,10 @@
 [config]
 
+[templates.hyprland]
+input_path = "~/.config/matugen/templates/hyprland_colors.lua.tmpl"
+output_path = "~/.config/hypr/colors.lua"
+post_hook = "hyprctl reload >/dev/null 2>&1 || true"
+
 [templates.waybar]
 input_path = "~/.config/matugen/templates/waybar_matugen.css.tmpl"
 output_path = "~/.config/waybar/matugen.css"

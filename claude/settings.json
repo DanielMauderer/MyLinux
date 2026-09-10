@@ -31,10 +31,19 @@
   },
   "enabledPlugins": {
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true,
+    "gitlab@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "figma@claude-plugins-official": true
   },
-  "effortLevel": "medium",
+  "effortLevel": "high",
   "advisorModel": "opus",
   "theme": "dark",
-  "autoCompactEnabled": true
+  "editorMode": "vim",
+  "preferredNotifChannel": "auto",
+  "autoCompactEnabled": true,
+  "modelSettings": {
+    "claude-opus-5": {}
+  }
 }

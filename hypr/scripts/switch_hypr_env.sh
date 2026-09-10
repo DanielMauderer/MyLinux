@@ -14,17 +14,17 @@ esac
 
 conf_dir="${HOME}/.config/hypr/conf"
 
-if [[ ! -f "${conf_dir}/monitors/${env_name}.conf" ]]; then
-  echo "Missing: ${conf_dir}/monitors/${env_name}.conf"
+if [[ ! -f "${conf_dir}/monitors/${env_name}.lua" ]]; then
+  echo "Missing: ${conf_dir}/monitors/${env_name}.lua"
   exit 1
 fi
-if [[ ! -f "${conf_dir}/workspaces/${env_name}.conf" ]]; then
-  echo "Missing: ${conf_dir}/workspaces/${env_name}.conf"
+if [[ ! -f "${conf_dir}/workspaces/${env_name}.lua" ]]; then
+  echo "Missing: ${conf_dir}/workspaces/${env_name}.lua"
   exit 1
 fi
 
-printf 'source = ~/.config/hypr/conf/monitors/%s.conf\n' "$env_name" > "${conf_dir}/monitor.conf"
-printf 'source = ~/.config/hypr/conf/workspaces/%s.conf\n' "$env_name" > "${conf_dir}/workspace.conf"
+printf 'require("conf.monitors.%s")\n' "$env_name" > "${conf_dir}/monitor.lua"
+printf 'require("conf.workspaces.%s")\n' "$env_name" > "${conf_dir}/workspace.lua"
 
 if command -v hyprctl >/dev/null 2>&1; then
   hyprctl reload || true

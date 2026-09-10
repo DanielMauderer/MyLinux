@@ -7,32 +7,27 @@
 #           |___/                             |___/
 #
 # -----------------------------------------------------
-# Get keybindings location based on variation
+# Show the active keybindings in rofi.
+#
+# Since Hyprland 0.56 the config is Lua, so the binds are read straight from
+# the compositor instead of being scraped out of a config file. Every bind in
+# conf/keybindings/*.lua carries a `description`.
 # -----------------------------------------------------
-config_file=$(<~/.config/hypr/conf/keybinding.conf)
-config_file=${config_file//source = ~//home/$USER}
 
-# -----------------------------------------------------
-# Path to keybindings config file
-# -----------------------------------------------------
-echo "Reading from: $config_file"
+keybinds=$(hyprctl binds -j | jq -r '
+    def mods(m):
+        [ if (m / 64) % 2 >= 1 then "SUPER" else empty end,
+          if (m / 4)  % 2 >= 1 then "CTRL"  else empty end,
+          if (m / 8)  % 2 >= 1 then "ALT"   else empty end,
+          if (m / 1)  % 2 >= 1 then "SHIFT" else empty end ]
+        | join(" + ");
 
-keybinds=$(awk -F'[=#]' '
-    $1 ~ /^bind/ {
-        # Replace the string "$mainMod" with "SUPER" (for the super key)
-        gsub(/\$mainMod/, "SUPER", $0)
-
-        # Remove "bind" and extra spaces, if any, at the beginning of the line
-        gsub(/^bind[[:space:]]*=+[[:space:]]*/, "", $0)
-
-        # Split the keybinding part (e.g., "Mod1,Return") using a comma
-        split($1, kbarr, ",")
-
-        # Format the keybinding and associated command and prepare for output:
-        # Concatenate the two keybinding keys (e.g., "Mod1" + "Return") and append the command
-        print kbarr[1] "  + " kbarr[2] "\r" $2
-    }
-' "$config_file")
+    .[]
+    | select(.description != "")
+    | ((mods(.modmask) | if . == "" then "" else . + " + " end)
+       + (if .key != "" then .key else "code:" + (.keycode | tostring) end))
+      + "\r" + .description
+')
 
 sleep 0.2
 rofi -dmenu -i -markup -eh 2 -replace -p "Keybinds" -config ~/.config/rofi/config-compact.rasi <<<"$keybinds"

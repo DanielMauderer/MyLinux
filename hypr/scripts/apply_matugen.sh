@@ -11,7 +11,7 @@ set -euo pipefail
 # If WALLPAPER_PATH is not provided, defaults to Hypr cache wallpaper.
 
 WALLPAPER="${1:-$HOME/.config/hypr/cache/current_wallpaper.png}"
-HYPR_COLORS="$HOME/.config/hypr/colors.conf"
+HYPR_COLORS="$HOME/.config/hypr/colors.lua"
 WAYBAR_MATUGEN="$HOME/.config/waybar/matugen.css"
 WLOGOUT_MATUGEN="$HOME/.config/wlogout/matugen.css"
 KITTY_COLORS="$HOME/.config/kitty/colors.conf"
@@ -23,7 +23,7 @@ log() {
 }
 
 hex_from_rgba_line() {
-    # Input: a line like `$primary = rgba(abc7ffff)`
+    # Input: a line like `    primary = "rgba(abc7ffff)",`
     # Output: #RRGGBB (strip alpha)
     local line="$1"
     local raw
@@ -34,7 +34,7 @@ hex_from_rgba_line() {
 }
 
 hex_from_rgba_line_no_hash() {
-    # Input: a line like `$primary = rgba(abc7ffff)`
+    # Input: a line like `    primary = "rgba(abc7ffff)",`
     # Output: RRGGBB (no hash, for swaylock)
     local line="$1"
     local raw
@@ -45,10 +45,10 @@ hex_from_rgba_line_no_hash() {
 }
 
 extract_color() {
-    # $1 variable name without leading $
+    # $1 variable name
     local var="$1"
     local line
-    line="$(grep -E "^\$${var}[[:space:]]*=" "$HYPR_COLORS" || true)"
+    line="$(grep -E "^[[:space:]]*${var}[[:space:]]*=" "$HYPR_COLORS" || true)"
     if [[ -z "$line" ]]; then
         echo ""
         return 0
@@ -57,11 +57,11 @@ extract_color() {
 }
 
 extract_color_no_hash() {
-    # $1 variable name without leading $
+    # $1 variable name
     # Output: RRGGBB (no hash, for swaylock)
     local var="$1"
     local line
-    line="$(grep -E "^\$${var}[[:space:]]*=" "$HYPR_COLORS" || true)"
+    line="$(grep -E "^[[:space:]]*${var}[[:space:]]*=" "$HYPR_COLORS" || true)"
     if [[ -z "$line" ]]; then
         echo ""
         return 0

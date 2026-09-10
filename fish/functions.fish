@@ -103,3 +103,67 @@ function load_nvm --on-variable="PWD"
   end
 end
 
+
+# Restack the current git-spice stack and update its MRs
+function update-stack --description 'Restack the current git-spice stack and update its MRs'
+    if not git rev-parse --show-toplevel >/dev/null 2>&1
+        echo "update-stack: not inside a git repository" >&2
+        return 1
+    end
+    set -l repo (git rev-parse --show-toplevel)
+    set -l start (git rev-parse --abbrev-ref HEAD)
+
+    # Hooks off for the rebase only: .githooks/post-checkout rewrites POSTGRES_URL
+    # and runs migrate + seed on EVERY branch switch, and a restack switches once
+    # per part.
+    set -l nohooks env GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0=/dev/null
+
+    # Sync BEFORE restacking. MRs land on main as squash merges, so a merged
+    # branch shares no commits with what actually landed — `stack restack` happily
+    # replays its originals onto main and conflicts on every hunk of a change that
+    # is already there. `repo sync` asks GitLab which MRs are merged, deletes those
+    # branches and re-parents their children onto main; only then is a restack
+    # about real work. Ancestry alone can't see this, hence the forge query.
+    echo "==> syncing with origin"
+    if not $nohooks git-spice repo sync
+        echo "update-stack: repo sync failed (forge auth? try `git-spice auth status`)" >&2
+        return 1
+    end
+
+    # If $start was one of the merged branches, sync deleted it and left us on
+    # trunk. Its children were re-parented onto trunk, so carry on from there —
+    # but note that from trunk the restack and submit below widen to EVERY tracked
+    # branch, not just this stack. --update-only keeps that harmless for branches
+    # without an MR; a sibling stack that already has MRs would get rebased onto
+    # the new main and force-pushed too. Usually what you want, occasionally not.
+    set -l moved 0
+    if not git show-ref --verify --quiet "refs/heads/$start"
+        set moved 1
+        set start (git rev-parse --abbrev-ref HEAD)
+        echo "==> merged branch was deleted, continuing from $start"
+    end
+
+    echo "==> restacking $start"
+    if not $nohooks git-spice stack restack
+        echo "update-stack: restack stopped (conflict?). Resolve, then:" >&2
+        echo "  git add -A; and $nohooks git-spice rebase continue" >&2
+        echo "…then run update-stack again." >&2
+        echo "  (to give up instead: $nohooks git-spice rebase abort)" >&2
+        return 1
+    end
+
+    # Deliberately NOT wrapped in $nohooks: .githooks/pre-push is `git lfs pre-push`
+    # and must run, or commits land whose LFS objects never reach the server.
+    echo "==> updating merge requests"
+    if not git-spice stack submit --update-only
+        return 1
+    end
+
+    # A restack returns you to where you started, so .env normally still names the
+    # right per-branch database. If something moved us, resync it once.
+    set -l finish (git rev-parse --abbrev-ref HEAD)
+    if test "$moved" = 1; or test "$start" != "$finish"
+        echo "==> resyncing .env for $finish"
+        "$repo/.githooks/post-checkout" HEAD HEAD 1
+    end
+end
